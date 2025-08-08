@@ -42,7 +42,25 @@ class BlogPost extends Model
     {
         return $this->belongsTo(BlogCategory::class, 'blog_category_id');
     }
+    public function getFeaturedImageUrlAttribute()
+    {
+        if (!$this->featured_image) {
+            return null;
+        }
 
+        // إذا الصورة مخزنة فقط كاسم ملف (مثلاً image.jpg)
+        if (!str_contains($this->featured_image, '/')) {
+            return asset('storage/posts/' . $this->featured_image);
+        }
+
+        // لو هي مسار كامل نسبي
+        return asset('storage/' . $this->featured_image);
+    }
+
+    public function blogCategory()
+    {
+        return $this->belongsTo(BlogCategory::class);
+    }
     public function getTagsArrayAttribute()
     {
         return $this->tags ? explode(',', $this->tags) : [];

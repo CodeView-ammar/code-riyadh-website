@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PageController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -27,3 +28,6 @@ Route::view('/contact', 'contact')->name('contact');
 
 // نموذج التواصل
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
+
+
+Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy.policy');

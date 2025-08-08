@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactRequest extends Model
 {
-    protected $fillable = [
+  protected $fillable = [
         'name',
         'email',
         'phone',
@@ -15,7 +15,10 @@ class ContactRequest extends Model
         'message',
         'status',
         'admin_notes',
-        'responded_at'
+        'responded_at',
+        'company', // إضافة حقل اسم الشركة
+        'budget',  // إضافة حقل الميزانية
+        'timeline', // إضافة حقل الإطار الزمني
     ];
 
     protected $casts = [

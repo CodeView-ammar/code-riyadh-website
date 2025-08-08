@@ -17,6 +17,9 @@ class ContactController extends Controller
             'service' => 'nullable|string|max:100',
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:5000',
+            'company' => 'nullable|string|max:255', // إضافة التحقق من اسم الشركة
+            'budget' => 'nullable|string|max:100', // إضافة التحقق من الميزانية
+            'timeline' => 'nullable|string|max:100', // إضافة التحقق من الإطار الزمني
         ], [
             'name.required' => 'الاسم مطلوب',
             'email.required' => 'البريد الإلكتروني مطلوب',
@@ -40,6 +43,9 @@ class ContactController extends Controller
                 'service_type' => $request->service,
                 'subject' => $request->subject,
                 'message' => $request->message,
+                'company' => $request->company, // إضافة اسم الشركة
+                'budget' => $request->budget, // إضافة الميزانية
+                'timeline' => $request->timeline, // إضافة الإطار الزمني
                 'status' => 'pending'
             ]);
 

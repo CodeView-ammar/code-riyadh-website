@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'كود الرياض - شركة تطوير البرمجيات والمواقع والتطبيقات')
-@section('meta_description', 'شركة كود الرياض الرائدة في تطوير المواقع والتطبيقات والأنظمة المتكاملة في السعودية. نحول أفكارك إلى حلول تقنية مبتكرة.')
+@section('title', $settings->get('seo_title')->value ?? 'كود الرياض - رائدة في تطوير الحلول التقنية والرقمية')
+@section('meta_description', $settings->get('seo_description')->value ?? 'شركة كود الرياض رائدة في تطوير المواقع الإلكترونية، تطبيقات الجوال، والأنظمة المتكاملة. خدمات تقنية احترافية في المملكة العربية السعودية.')
 
 @section('content')
 <div style="margin-top: 76px;">
@@ -14,7 +14,7 @@
                     class="{{ $index === 0 ? 'active' : '' }}"></button>
             @endforeach
         </div>
-        
+
         <div class="carousel-inner">
             @foreach($banners as $index => $banner)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
@@ -36,7 +36,7 @@
             </div>
             @endforeach
         </div>
-        
+
         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
@@ -82,10 +82,9 @@
                             @endif
                             <h5 class="card-title">{{ $service->title }}</h5>
                             <p class="card-text">{{ $service->short_description }}</p>
-                            @if($service->price_from)
-                            <p class="text-primary fw-bold">ابتداءً من {{ number_format($service->price_from) }} ريال</p>
-                            @endif
-                            <a href="{{ route('services.show', $service->slug) }}" class="btn btn-primary">اعرف المزيد</a>
+                            <div class="mt-3">
+                                <a href="#" class="btn btn-primary service-details-btn" data-service="{{ $service->slug }}">تفاصيل الخدمة</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,14 +190,58 @@
     @endif
 
     <!-- CTA Section -->
-    <section class="py-5 bg-primary text-white">
-        <div class="container text-center">
-            <h2 class="mb-4">هل لديك مشروع تود تنفيذه؟</h2>
-            <p class="lead mb-4">نحن هنا لمساعدتك في تحويل فكرتك إلى واقع رقمي مميز</p>
-            <a href="{{ route('contact') }}" class="btn btn-light btn-lg me-3">تواصل معنا</a>
-            <a href="https://wa.me/+966500000000" class="btn btn-success btn-lg">
-                <i class="fab fa-whatsapp me-2"></i>راسلنا عبر الواتس
-            </a>
+    <section id="contact" class="py-5 bg-primary text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4">
+                    <h2 class="mb-4">هل لديك مشروع تود تنفيذه؟</h2>
+                    <p class="lead mb-4">نحن هنا لمساعدتك في تحويل فكرتك إلى واقع رقمي مميز</p>
+                    <div class="contact-info">
+                        <div class="mb-3">
+                            <i class="fas fa-phone me-2"></i>
+                            <span>+966501234567</span>
+                        </div>
+                        <div class="mb-3">
+                            <i class="fas fa-envelope me-2"></i>
+                            <span>info@coderiyadh.com</span>
+                        </div>
+                        <div class="mb-3">
+                            <i class="fab fa-whatsapp me-2"></i>
+                            <a href="https://wa.me/+966501234567" class="text-light">راسلنا عبر الواتس</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h5 class="text-dark mb-3">اطلب استشارة مجانية</h5>
+                        <form id="consultationForm" action="{{ route('contact.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <input type="text" name="name" class="form-control" placeholder="الاسم" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" name="email" class="form-control" placeholder="البريد الإلكتروني" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" name="phone" class="form-control" placeholder="رقم الهاتف" required>
+                            </div>
+                            <div class="mb-3">
+                                <select name="service" class="form-control" required>
+                                    <option value="">اختر نوع الخدمة</option>
+                                    <option value="web-development">تطوير المواقع</option>
+                                    <option value="mobile-apps">تطبيقات الجوال</option>
+                                    <option value="integrated-systems">الأنظمة المتكاملة</option>
+                                    <option value="consultation">استشارة عامة</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <textarea name="message" class="form-control" rows="3" placeholder="وصف مختصر للمشروع" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">اطلب استشارة مجانية</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>
